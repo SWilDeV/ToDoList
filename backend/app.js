@@ -63,21 +63,22 @@ app.get("/:userId/tasks", async (req, res) => {
 });
 
 //GET/userID/tasks/taskID
-app.get(":userId/tasks/:taskId", async (req, res)=>{
-  const {userId, taskId} = req.params;
+app.get("/:userId/tasks/:taskId", async (req, res) => {
+  const { userId, taskId } = req.params;
   const user = await Users.findById(userId);
-  if(!user){
+  if (!user) {
     return res.status(404).send("User not found");
   }
-  const task = Tasks.findById(user.id, taskId);
-  res.status(200).jason(task.toDTO());
-})
+  const task = await Tasks.getTaskById(taskId, userId);
+  if (!task) {
+    return res.status(404).send("task not found");
+  }
+  return res.status(200).json(task.toDTO());
+});
 
 //PUT/userID/tasks/taskID
 
 //DELETE/userID/taskID
-
-
 
 app.listen(port, () => {
   console.log(`server is runing on port ${port}`);
