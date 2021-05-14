@@ -5,19 +5,19 @@ const createTask = async (user, name) => {
   return task;
 };
 
-// const getTaskbyUser = async (user) => {
-//   return await Task.find({
-//     user,
-//   });
-// };
+const getTaskbyUser = async (userId) => {
+  return await DBTask.find({
+    userId,
+  });
+};
 
-// const findById = async (user, taskId) => {
-//   const task = await Task.findOne({
-//     _id: taskId,
-//     user,
-//   });
-//   return task;
-// };
+const findById = async (userId, taskId) => {
+  const task = await DBTask.findOne({
+    _id: taskId,
+    userId,
+  });
+  return task;
+};
 
 // const updateById = async (taskId, userId, name) => {
 //   const task = await findById(userId, taskId);
@@ -38,8 +38,8 @@ const createTask = async (user, name) => {
 
 exports.default = {
   createTask,
-  //   getTaskbyUser,
-  //   findById,
+    getTaskbyUser,
+    findById,
   //   updateById,
   //   deleteById,
 };

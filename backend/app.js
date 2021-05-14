@@ -24,7 +24,6 @@ app.use(
   express.json()
 );
 
-
 //POST/user
 app.post("/users", async (req, res) => {
   //creer utilisateur
@@ -33,41 +32,52 @@ app.post("/users", async (req, res) => {
 });
 
 //POST/userId/tasks/
-app.post("/:userId/task", async (req,res,next) =>{
-  const {userId} = req.params;
-  const {name} = req.body;
+app.post("/:userId/task", async (req, res, next) => {
+  const { userId } = req.params;
+  const { name } = req.body;
 
+  const user = await Users.findById(userId);
+  if (!user) {
+    return res.status(404).send("User not found");
+  }
+  if (!user || name.trim() === "") {
+    return res.status(400).send("Please enter a task name");
+  }
+  console.log("user found");
+  const task = await Tasks.createTask(user._id, name);
+  res.status(201).json(task.toDTO());
+});
+
+//GET/userID/tasks
+
+app.get("/:userId/tasks", async (req, res) => {
+  const { userId } = req.params;
+
+  const user = await Users.findById(userId);
+  if (!user) {
+    return res.status(404).send("User not found");
+  }
+
+  const tasks = await Tasks.getTaskbyUser(user.id);
+  res.status(200).json(tasks.map((task) => task.toDTO()));
+});
+
+//GET/userID/tasks/taskID
+app.get(":userId/tasks/:taskId", async (req, res)=>{
+  const {userId, taskId} = req.params;
   const user = await Users.findById(userId);
   if(!user){
     return res.status(404).send("User not found");
   }
-  if(!user || name.trim() === ""){
-    return res.status(400).send("Please enter a task name");
-  }
-  console.log("user found");
-  const task = await Tasks.createTask(user._id,name); 
-  res.status(201).json(task.toDTO());
+  const task = Tasks.findById(user.id, taskId);
+  res.status(200).jason(task.toDTO());
 })
-
-
-
-
-//GET/userID/tasks
-// app.get("/:userId/tasks", async (req, res) => {
-//   const { userId } = req.params;
-
-//   const user = await User.findById(userId);
-//   if (!user) {
-//     return res.status(404).send("User not found.");
-//   }
-
-//   const tasks = await Task.getTaskbyUser(user.id);
-//   return res.status(200).json(tasks.map((task) => task.toDTO()));
-// });
 
 //PUT/userID/tasks/taskID
 
 //DELETE/userID/taskID
+
+
 
 app.listen(port, () => {
   console.log(`server is runing on port ${port}`);
