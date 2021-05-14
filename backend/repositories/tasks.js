@@ -37,12 +37,12 @@ const updateById = async (taskId, userId, name) => {
   return task;
 };
 
-// const deleteById = async (taskId, user) => {
-//   await Task.deleteOne({
-//     _id: taskId,
-//     user,
-//   });
-// };
+const deleteById = async (taskId, user) => {
+  await DBTask.deleteOne({
+    _id: taskId,
+    user,
+  });
+};
 
 exports.default = {
   createTask,
@@ -50,5 +50,5 @@ exports.default = {
     findById,
     getTaskById,
     updateById,
-  //   deleteById,
+    deleteById,
 };
