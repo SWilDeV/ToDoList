@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
-    <to-do-list msg="Welcome to the ToDo List App" />
+    <to-do-list msg="Welcome to the Super ToDoList App" />
   </div>
 </template>
 
