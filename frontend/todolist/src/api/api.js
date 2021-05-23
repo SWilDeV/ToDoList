@@ -3,7 +3,18 @@ export default class Api {
     this.baseURL = `http://localhost:5000`;
   }
 
-  getData = async (userId) => {
+  registerUser = (user) => {
+    this.user = user;
+  };
+
+  createUserAPI = async () => {
+    const response = await fetch(`${this.baseURL}/users`, {
+      method: "POST",
+    });
+    return response.json();
+  };
+
+  getTasksAPI = async (userId) => {
     const response = await fetch(`${this.baseURL}/${userId}/tasks`, {
       method: "GET",
     });

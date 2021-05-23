@@ -25,7 +25,6 @@ import TaskItem from "./TaskItem.vue";
 import NewTask from "./NewTask.vue";
 import Vue from "vue";
 const api = new Api();
-const userId = "609c944f822c8247b0e89f37";
 
 export default {
   name: "ToDoList",
@@ -38,19 +37,15 @@ export default {
   },
   data() {
     return {
+      user: String,
       taskList: [],
     };
   },
   async created() {
     try {
-      const tasks = await api.getData(userId);
-
-      for (const task of tasks) {
-        this.taskList.push({
-          id: task.id,
-          name: task.name,
-        });
-      }
+      await this.init();
+      await this.getTasks();
+      
     } catch (e) {
       console.error(e);
     }
@@ -58,7 +53,7 @@ export default {
   methods: {
     async addTask(task) {
       try {
-        const res = await api.addTaskAPI(userId, task);
+        const res = await api.addTaskAPI(this.user, task);
         this.taskList.push({
           id: res.id,
           name: res.name,
@@ -69,7 +64,7 @@ export default {
     },
     async deleteTask(taskId) {
       try {
-        await api.deleteTaskAPI(userId, taskId);
+        await api.deleteTaskAPI(this.user, taskId);
         const index = this.taskList.findIndex(
           (deletedTask) => deletedTask.id === taskId
         );
@@ -78,6 +73,27 @@ export default {
         }
       } catch (e) {
         console.log(e);
+      }
+    },
+    async init() {
+      try {
+        let user = JSON.parse(localStorage.getItem("user"));
+        if (!user) {
+          user = await api.createUserAPI();
+          localStorage.setItem("user", JSON.stringify(user));
+        }
+        this.user = user.id;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async getTasks() {
+      const tasks = await api.getTasksAPI(this.user);
+      for (const task of tasks) {
+        this.taskList.push({
+          id: task.id,
+          name: task.name,
+        });
       }
     },
   },
