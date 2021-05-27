@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+require('dotenv').config();
 
 const app = express();
 const Users = require("./repositories/users").default;
@@ -8,9 +9,10 @@ const Tasks = require("./repositories/tasks").default;
 const { default: task } = require("./models/task");
 
 const port = 5000;
-const MONGODB_URI = "mongodb://localhost:27017/ToDoList";
+// const MONGODB_URI = "mongodb://localhost:27017/ToDoList";
+const dbUrl = process.env.DB_URL;
 
-mongoose.connect(MONGODB_URI, {
+mongoose.connect(dbUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -96,8 +98,8 @@ app.put("/:userId/tasks/:taskId", async (req, res) => {
 });
 
 //DELETE/userID/taskID
-app.delete("/:userId/tasks/:taskId", async(req,res) =>{
-  const {userId, taskId} = req.params;
+app.delete("/:userId/tasks/:taskId", async (req, res) => {
+  const { userId, taskId } = req.params;
 
   const user = await Users.findById(userId);
   if (!user) {
@@ -108,10 +110,9 @@ app.delete("/:userId/tasks/:taskId", async(req,res) =>{
     return res.status(404).send("task not found");
   }
 
-  await Tasks.deleteById(taskId,userId) ;
+  await Tasks.deleteById(taskId, userId);
   return res.status(204).send(null);
-
-})
+});
 
 app.listen(port, () => {
   console.log(`server is runing on port ${port}`);
