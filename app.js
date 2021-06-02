@@ -8,7 +8,7 @@ const Users = require("./repositories/users").default;
 const Tasks = require("./repositories/tasks").default;
 const { default: task } = require("./models/task");
 
-const port = 5000;
+const port = process.env.PORT|| 5000;
 //  const MONGODB_URI = "mongodb://localhost:27017/ToDoList";
 // const dbUrl = "mongodb://localhost:27017/ToDoList";
 
