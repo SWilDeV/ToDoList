@@ -1,6 +1,6 @@
 export default class Api {
   constructor() {
-    this.baseURL = `https://peaceful-dusk-66565.herokuapp.com`;
+    this.baseURL = `https://peaceful-dusk-66565.herokuapp.com:process.env.PORT`;
     // this.baseURL = `http://localhost:5000`;
   }
 
