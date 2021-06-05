@@ -2,7 +2,7 @@ export default class Api {
   constructor() {
     this.baseURL = `https://peaceful-dusk-66565.herokuapp.com`;
 
-    //this.baseURL = `http://localhost:${process.env.PORT}`;
+    // this.baseURL = `http://localhost:5000`;
   }
 
   registerUser = (user) => {
@@ -12,9 +12,6 @@ export default class Api {
   createUserAPI = async () => {
     const response = await fetch(`${this.baseURL}/users`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
     });
     return response.json();
   };
@@ -22,9 +19,6 @@ export default class Api {
   getTasksAPI = async (userId) => {
     const response = await fetch(`${this.baseURL}/${userId}/tasks`, {
       method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
     });
     const responseJSON = response.json();
     return responseJSON;
