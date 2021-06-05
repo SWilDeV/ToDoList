@@ -1,7 +1,7 @@
 export default class Api {
   constructor() {
-    this.baseURL = `/`;
-    //  this.baseURL = `https://peaceful-dusk-66565.herokuapp.com`;
+    // this.baseURL = `/`;
+    this.baseURL = `https://peaceful-dusk-66565.herokuapp.com`;
 
     // this.baseURL  = `http://localhost:5000`;
   }
