@@ -32,7 +32,7 @@ app.use(
   cors({
     origin: "*",
     methods: ["GET", "POST", "DELETE", "PUT"],
-    credentials: false,
+    credentials: true,
   }),
   express.json()
 );
