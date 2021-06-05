@@ -8,15 +8,11 @@ const Users = require("./repositories/users").default;
 const Tasks = require("./repositories/tasks").default;
 const { default: task } = require("./models/task");
 
-const port = process.env.PORT|| 5000;
+const port = process.env.PORT || 5000;
 //  const MONGODB_URI = "mongodb://localhost:27017/ToDoList";
 // const dbUrl = "mongodb://localhost:27017/ToDoList";
 
 const dbUrl = process.env.DB_URL;
-// const dbUrl =
-//   "mongodb+srv://sean0669:f7shL6KStvZrUZh@cluster0.u3cko.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-// const dbUrl =
-//   "mongodb://sean0669:f7shL6KStvZrUZh@cluster0-shard-00-00.u3cko.mongodb.net:27017,cluster0-shard-00-01.u3cko.mongodb.net:27017,cluster0-shard-00-02.u3cko.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-xuwvui-shard-0&authSource=admin&retryWrites=true&w=majority";
 
 mongoose.connect(dbUrl, {
   useNewUrlParser: true,
