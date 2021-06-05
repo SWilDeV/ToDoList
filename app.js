@@ -19,11 +19,11 @@ mongoose.connect(dbUrl, {
   useUnifiedTopology: true,
 });
 
-
 app.use(
   cors({
     origin: "*",
     methods: ["GET", "POST", "DELETE", "PUT", "OPTIONS"],
+    header: "Access-Control-Allow-Origin",
     credentials: true,
   }),
   express.json()
