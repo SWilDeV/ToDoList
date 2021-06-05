@@ -31,7 +31,7 @@ app.use(
   // },
   cors({
     origin: "*",
-    methods: ["GET", "POST", "DELETE", "PUT"],
+    methods: ["GET", "POST", "DELETE", "PUT", "OPTIONS"],
     credentials: true,
   }),
   express.json()
